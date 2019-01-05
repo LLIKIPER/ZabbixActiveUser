@@ -46,12 +46,21 @@
 # В zabbix
 Создаете требуемые элементы данных:
 
-**user.work[Summary,server1c]** - Всего пользователей в системе
+**user.work[Summary,ZabbixNodename]** - Всего пользователей в системе
 
 **user.work[Active,ZabbixNodename]** - Активно пользователей
 
-**user.work[Idle,server1c]** - отсутствующих пользователей
+**user.work[Idle,ZabbixNodename]** - отсутствующих пользователей
 
-**user.work[Offline,server1c]** - в иных состояниях(отключенных)
+**user.work[Offline,ZabbixNodename]** - в иных состояниях(отключенных)
 
 **user.work[ZabbixUsername,ZabbixParam]** - статистика по пользователю (параметры поменять **!** в соответствии с конфигом, а также создать сколько требуется)
+
+
+# Скриншоты
+## Добавление вспомогательного узла
+![Добавление вспомогательного узла](/images/image001.png)
+## Добавление графика
+![Добавление графика](/images/image002.png)
+## Скрин графика
+![Скрин графика](/images/image003.png)
