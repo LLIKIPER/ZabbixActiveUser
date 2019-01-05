@@ -12,6 +12,7 @@
 
 # Build results
 [Dd]ebug/
+[Rr]elease/
 [Dd]ebugPublic/
 [Xx]64/
 [Xx]86/
@@ -240,3 +241,4 @@ ModelManifest.xml
 .fake/
 /Release/ZabbixActiveUserService.exe.config
 /Release/ZabbixActiveUserServiceTest.exe.config
+/Release
