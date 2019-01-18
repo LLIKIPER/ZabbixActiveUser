@@ -158,27 +158,41 @@ namespace ZabbixActiveUserService
                 #region Сбор состояний пользователей
                 using (ITerminalServer server = Settings.manager.GetLocalServer())
                 {
-                    server.Open();
-                    foreach (ITerminalServicesSession session in server.GetSessions())
+                    try
                     {
-                        if (session.UserAccount == null)
-                            continue;
-
-                        if(Settings.IgnoreUsername.Contains(session.UserAccount.ToString()))
-                            continue;
-
-                        int state = 0;
-                        double idle = Math.Floor(session.IdleTime.TotalSeconds);
-
-                        if (session.ConnectionState == Cassia.ConnectionState.Active || session.ConnectionState == Cassia.ConnectionState.Idle)
+                        server.Open();
+                        foreach (ITerminalServicesSession session in server.GetSessions())
                         {
-                            if (idle < Settings.IdleTime)
-                                state = 2;
-                            else
-                                state = 1;
-                        }
+                            try
+                            {
+                            if (session.UserAccount == null)
+                                continue;
 
-                        userList.Add(new User(session.UserAccount.ToString(), state));
+                            if (Settings.IgnoreUsername.Contains(session.UserAccount.ToString()))
+                                continue;
+
+                            int state = 0;
+                            double idle = Math.Floor(session.IdleTime.TotalSeconds);
+
+                            if (session.ConnectionState == Cassia.ConnectionState.Active || session.ConnectionState == Cassia.ConnectionState.Idle)
+                            {
+                                if (idle < Settings.IdleTime)
+                                    state = 2;
+                                else
+                                    state = 1;
+                            }
+
+                            userList.Add(new User(session.UserAccount.ToString(), state));
+                            }
+                            catch (Exception ex)
+                            {
+                                Settings.logger.Error(ex, "Ошибка чтения состояния пользователя:");                                
+                            }
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Settings.logger.Error(ex, "Ошибка чтения списка пользователей:");
                     }
                 }
                 #endregion
